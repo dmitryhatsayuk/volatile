@@ -17,15 +17,9 @@ public class Main {
             texts[i] = generateText("abc", 3 + random.nextInt(3));
         }
 
-        new Thread(() -> {
-            matrixVerifier(texts, threeCounter, 3);
-        }).start();
-        new Thread(() -> {
-            matrixVerifier(texts, fourCounter, 4);
-        }).start();
-        new Thread(() -> {
-            matrixVerifier(texts, fiveCounter, 5);
-        }).start();
+        new Thread(() -> polVerifier(texts)).start();
+        new Thread(() -> abVerifier(texts)).start();
+        new Thread(() -> repVerifier(texts)).start();
 
         System.out.println("Красивых слов с длиной 3 " + threeCounter);
         System.out.println("Красивых слов с длиной 4 " + fourCounter);
@@ -75,10 +69,46 @@ public class Main {
         return sortedString.equals(string);
     }
 
-    static void matrixVerifier(String[] strings, AtomicInteger counter, int keyWordLength) {
-        for (int i = 0; i < strings.length; i++) {
-            if ((isPalindrome(strings[i]) || isAlphabetical(strings[i]) || isRepeat(strings[i])) & strings[i].length() == keyWordLength)
-                counter.getAndIncrement();
+    static void abVerifier(String[] strings) {
+        for (String string : strings) {
+            if (isAlphabetical(string)){
+                if (string.length() == 3) {
+                    threeCounter.getAndIncrement();
+                }
+            if (string.length() == 4) {
+                fourCounter.getAndIncrement();
+            }
+            if (string.length() == 5) {
+                fiveCounter.getAndIncrement();
+            }}
+        }
+    }
+    static void repVerifier(String[] strings) {
+        for (String string : strings) {
+            if (isRepeat(string)){
+                if (string.length() == 3) {
+                    threeCounter.getAndIncrement();
+                }
+                if (string.length() == 4) {
+                    fourCounter.getAndIncrement();
+                }
+                if (string.length() == 5) {
+                    fiveCounter.getAndIncrement();
+                }}
+        }
+    }
+    static void polVerifier(String[] strings) {
+        for (String string : strings) {
+            if (isPalindrome(string)){
+                if (string.length() == 3) {
+                    threeCounter.getAndIncrement();
+                }
+                if (string.length() == 4) {
+                    fourCounter.getAndIncrement();
+                }
+                if (string.length() == 5) {
+                    fiveCounter.getAndIncrement();
+                }}
         }
     }
 }
